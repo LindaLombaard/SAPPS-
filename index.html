@@ -180,12 +180,174 @@
 
   /* small helper */
   .section-head{display:flex; align-items:center; gap:16px; justify-content:space-between}
+
+  <style>
+/* ===========================
+   MOBILE-FRIENDLY UPDATES
+=========================== */
+
+/* NAVBAR MOBILE MENU */
+@media (max-width: 900px) {
+  nav {
+    justify-content: space-between;
+    padding: 0 18px;
+  }
+
+  nav ul {
+    flex-direction: column;
+    background: var(--black);
+    position: fixed;
+    top: var(--nav-height);
+    left: 0;
+    right: 0;
+    height: 0;
+    overflow: hidden;
+    transition: height 0.3s ease;
+  }
+
+  nav ul.open {
+    height: auto;
+    padding: 12px 0;
+  }
+
+  nav li {
+    width: 100%;
+    text-align: center;
+  }
+
+  nav a {
+    display: block;
+    padding: 14px;
+    font-size: 1rem;
+  }
+
+  nav li ul {
+    position: static;
+    box-shadow: none;
+    background: none;
+  }
+
+  nav li ul li a {
+    padding-left: 30px;
+  }
+
+  /* Hamburger icon */
+  .menu-toggle {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 26px;
+    height: 20px;
+    cursor: pointer;
+  }
+
+  .menu-toggle span {
+    display: block;
+    height: 3px;
+    background: var(--white);
+    border-radius: 2px;
+    transition: all 0.3s;
+  }
+
+  .menu-toggle.active span:nth-child(1) {
+    transform: rotate(45deg) translateY(8px);
+  }
+  .menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+  }
+  .menu-toggle.active span:nth-child(3) {
+    transform: rotate(-45deg) translateY(-8px);
+  }
+}
+
+/* HERO TEXT RESPONSIVE */
+@media (max-width: 768px) {
+  .hero {
+    height: 65vh;
+    background-position: center;
+  }
+  .hero h1 {
+    font-size: 2rem;
+  }
+  .hero p {
+    font-size: 0.95rem;
+  }
+}
+
+/* SECTION TEXT & LAYOUT */
+@media (max-width: 768px) {
+  h2.section-title {
+    font-size: 1.4rem;
+    text-align: center;
+  }
+
+  main {
+    padding: 36px 14px;
+  }
+
+  .services-grid,
+  .packages-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .gallery-grid {
+    column-count: 1;
+  }
+}
+
+/* CONTACT SECTION MOBILE FIX */
+@media (max-width: 768px) {
+  .contact-container {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 24px;
+  }
+
+  .contact-form {
+    padding: 20px;
+  }
+
+  .contact-details p, 
+  .office-hours p {
+    font-size: 0.95rem;
+  }
+
+  .contact-form input, 
+  .contact-form textarea {
+    font-size: 0.95rem;
+  }
+
+  .contact-form button {
+    font-size: 1rem;
+  }
+}
+
+/* SOCIAL BUTTONS ADJUST */
+@media (max-width: 480px) {
+  .floating-buttons {
+    right: 10px;
+    bottom: 10px;
+  }
+  .float-btn {
+    width: 40px;
+    height: 40px;
+  }
+  .float-btn img {
+    width: 20px;
+    height: 20px;
+  }
+}
 </style>
 </head>
 <body>
 
   <!-- NAV -->
   <nav id="mainNav" aria-label="Main navigation">
+    <div class="menu-toggle" id="menuToggle" aria-label="Toggle navigation" role="button">
+  <span></span>
+  <span></span>
+  <span></span>
+</div>
     <ul>
       <li><a href="#home" class="nav-link">Home</a></li>
       <li><a href="#about" class="nav-link">About</a></li>
@@ -697,6 +859,16 @@ form.addEventListener('submit', function(e) {
   navLinks.forEach(l => l.addEventListener('click', ()=> {
     // small helper: remove active on mobile nav if implemented
   }));
+</script>
+<script>
+// Mobile menu toggle
+const menuToggle = document.getElementById('menuToggle');
+const navList = document.querySelector('nav ul');
+
+menuToggle.addEventListener('click', () => {
+  menuToggle.classList.toggle('active');
+  navList.classList.toggle('open');
+});
 </script>
 
 </body>

@@ -34,9 +34,15 @@
     display:flex;
     align-items:center;
     z-index:1200;
-    padding:0 30px;
+    padding:0 18px;
     box-shadow:0 1px 0 rgba(255,255,255,0.03) inset;
+    gap:12px;
+    justify-content:space-between;
   }
+
+  /* brand/logo area (optional) */
+  .nav-brand{ display:flex; align-items:center; gap:12px; }
+  .nav-brand img{ height:40px; display:block; }
 
   nav ul{
     list-style:none;
@@ -77,48 +83,52 @@
     box-shadow:0 6px 20px rgba(0,0,0,0.35);
     padding:8px 0;
   }
-  nav li:hover > ul{display:flex}
+
+  /* show on hover only on devices that support hover */
+  @media (hover: hover) {
+    nav li:hover > ul{display:flex}
+  }
+
   nav li ul li{padding:0}
   nav li ul li a{padding:10px 16px; width:100%; display:block}
   nav li ul li a:hover{background:rgba(255,255,255,0.04)}
 
   /* ---------- HERO ---------- */
   .hero {
-  height: 80vh; /* shrink dynamically */
-  min-height: 400px;
-  background: url('images/sapps-banner-1.png') center/cover no-repeat;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  margin-top: var(--nav-height);
-  text-align: center;
-  overflow: hidden;
-}
+    height: 80vh; /* shrink dynamically */
+    min-height: 400px;
+    background: url('images/sapps-banner-1.png') center/cover no-repeat;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    margin-top: var(--nav-height);
+    text-align: center;
+    overflow: hidden;
+  }
 
   .hero-overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.35);
-  transition: background .25s linear;
-  z-index: 1;
-  pointer-events: none; /* ✅ Allow clicks to pass through */
-}
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.35);
+    transition: background .25s linear;
+    z-index: 1;
+    pointer-events: none; /* allow clicks to pass through */
+  }
 
- .hero .content {
-  position: relative;
-  z-index: 2;
-  padding: 0 20px;
-  text-align: center;
-}
-.hero h1 {
-  font-size: 2.2rem;
-}
-.hero p {
-  font-size: 1rem;
-}
-
+  .hero .content {
+    position: relative;
+    z-index: 2;
+    padding: 0 20px;
+    text-align: center;
+  }
+  .hero h1 {
+    font-size: 2.2rem;
+  }
+  .hero p {
+    font-size: 1rem;
+  }
 
   /* sections base */
   main{max-width:1200px; margin:0 auto; padding:48px 18px}
@@ -150,8 +160,6 @@
   .service-image{height:160px; width:100%; object-fit:cover; display:block}
   .service-body{padding:20px; text-align:center; flex:1; display:flex; align-items:center; justify-content:center}
   .service-body h3{margin:0; font-size:1rem; color:#111}
-
-  /* second row spacing (grid handles automatically) */
 
   /* ---------- PACKAGES ---------- */
   .packages-grid{
@@ -198,17 +206,88 @@
 
   /* small helper */
   .section-head{display:flex; align-items:center; gap:16px; justify-content:space-between}
+
+  /* ---------- MOBILE MENU ---------- */
+  /* hamburger */
+  .nav-toggle {
+    display:none;
+    background:transparent;
+    border:0;
+    cursor:pointer;
+    gap:6px;
+    padding:8px;
+    align-items:center;
+    justify-content:center;
+  }
+  .nav-toggle .bar{
+    display:block;
+    width:20px;
+    height:2px;
+    background:var(--white);
+    border-radius:2px;
+    transition:transform .25s, opacity .25s;
+  }
+
+  /* submenu toggle button (mobile only) */
+  .submenu-toggle { display:none; background:transparent; border:0; color:var(--white); padding:8px; cursor:pointer; }
+
+  @media (max-width: 768px) {
+    nav { padding:0 12px; }
+    .nav-toggle { display:flex; }
+
+    nav ul{
+      position:fixed;
+      top:var(--nav-height);
+      left:0;
+      right:0;
+      background:var(--black);
+      flex-direction:column;
+      align-items:stretch;
+      gap:0;
+      padding:8px 0;
+      transform:translateY(-120%);
+      transition:transform .35s ease-in-out;
+      z-index:1250;
+    }
+    nav ul.open { transform:translateY(0); }
+
+    nav li { width:100%; border-top:1px solid rgba(255,255,255,0.03); }
+    nav a { display:block; width:100%; text-align:left; padding:14px 18px; }
+    .submenu { position:static; background:transparent; box-shadow:none; padding-left:12px; display:none; }
+    .submenu.open { display:flex; flex-direction:column; }
+    .submenu li a { padding:10px 28px; background:transparent; border-radius:0; }
+
+    .submenu-toggle { display:inline-flex; align-items:center; justify-content:center; padding:12px; margin-left:auto; }
+  }
+
+  /* small visual for open submenu (desktop keyboard focus) */
+  nav li.submenu-open > a { background:rgba(255,255,255,0.04); }
+
 </style>
 </head>
 <body>
 
   <!-- NAV -->
   <nav id="mainNav" aria-label="Main navigation">
-    <ul>
+    <div class="nav-brand" aria-hidden="false">
+      <!-- optional logo (leave it if you have one) -->
+      <a href="#home" class="logo" aria-label="Home">
+        <img src="images/logo.png" alt="SA Private Protection Services Logo" onerror="this.style.display='none'">
+      </a>
+    </div>
+
+    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-label="Open menu">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
+
+    <ul id="navLinks">
       <li><a href="#home" class="nav-link">Home</a></li>
       <li><a href="#about" class="nav-link">About</a></li>
-      <li>
+      <li class="has-submenu">
         <a href="#services" class="nav-link">Our Services</a>
+        <button class="submenu-toggle" aria-expanded="false" aria-label="Toggle Our Services submenu">▾</button>
         <ul>
           <li><a href="#armed-response" class="nav-link">24-Hour Armed Response</a></li>
           <li><a href="#close-protection" class="nav-link">Close Protection Services</a></li>
@@ -218,8 +297,9 @@
           <li><a href="#surveillance" class="nav-link">Surveillance & Monitoring</a></li>
         </ul>
       </li>
-      <li>
+      <li class="has-submenu">
         <a href="#packages" class="nav-link">Response Packages</a>
+        <button class="submenu-toggle" aria-expanded="false" aria-label="Toggle Response Packages submenu">▾</button>
         <ul>
           <li><a href="#residential" class="nav-link">Residential</a></li>
           <li><a href="#pensioner" class="nav-link">Pensioner</a></li>
@@ -236,6 +316,8 @@
   <header id="home" class="hero" role="banner">
     <div class="hero-overlay" id="heroOverlay"></div>
     <div class="content">
+      <h1>SA Private Protection Services</h1>
+      <p>Professional security solutions — responsive and trusted since 2016.</p>
     </div>
   </header>
 
@@ -343,12 +425,12 @@
 </section>
 
 <!-- LIGHTBOX MODAL -->
-<div id="lightbox" class="lightbox">
-  <span class="close">&times;</span>
-  <img class="lightbox-content" id="lightbox-img">
+<div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-label="Image viewer">
+  <span class="close" role="button" aria-label="Close">&times;</span>
+  <img class="lightbox-content" id="lightbox-img" alt="">
   <div id="caption"></div>
-  <a class="prev">&#10094;</a>
-  <a class="next">&#10095;</a>
+  <a class="prev" role="button" aria-label="Previous image">&#10094;</a>
+  <a class="next" role="button" aria-label="Next image">&#10095;</a>
 </div>
 
 <style>
@@ -423,6 +505,9 @@
 </style>
 
 <script>
+/* =========================
+   LIGHTBOX (kept as original)
+   ========================= */
 const lightbox = document.getElementById('lightbox');
 const lightboxImg = document.getElementById('lightbox-img');
 const captionText = document.getElementById('caption');
@@ -433,6 +518,7 @@ let currentIndex = 0;
 images.forEach((img, index) => {
   img.onclick = () => {
     lightbox.style.display = 'block';
+    lightbox.setAttribute('aria-hidden', 'false');
     currentIndex = index;
     showImage(currentIndex);
   }
@@ -441,7 +527,8 @@ images.forEach((img, index) => {
 // Show image function
 function showImage(index) {
   lightboxImg.src = images[index].src;
-  captionText.innerHTML = images[index].alt;
+  lightboxImg.alt = images[index].alt || '';
+  captionText.innerHTML = images[index].alt || '';
 }
 
 // Next / Previous controls
@@ -458,11 +545,15 @@ document.querySelector('.prev').onclick = () => {
 // Close lightbox
 document.querySelector('.close').onclick = () => {
   lightbox.style.display = 'none';
+  lightbox.setAttribute('aria-hidden', 'true');
 }
 
 // Close when clicking outside image
 lightbox.onclick = (e) => {
-  if(e.target === lightbox) lightbox.style.display = 'none';
+  if(e.target === lightbox) {
+    lightbox.style.display = 'none';
+    lightbox.setAttribute('aria-hidden', 'true');
+  }
 }
 
 // Optional: keyboard navigation
@@ -470,11 +561,13 @@ document.addEventListener('keydown', (e) => {
   if(lightbox.style.display === 'block') {
     if(e.key === 'ArrowRight') document.querySelector('.next').click();
     if(e.key === 'ArrowLeft') document.querySelector('.prev').click();
-    if(e.key === 'Escape') lightbox.style.display = 'none';
+    if(e.key === 'Escape') {
+      lightbox.style.display = 'none';
+      lightbox.setAttribute('aria-hidden', 'true');
+    }
   }
 });
 </script>
-
 
     <!-- CONTACT -->
 <section id="contact">
@@ -518,51 +611,23 @@ document.addEventListener('keydown', (e) => {
   </div>
 </div>
 
-<script>
-  const form = document.getElementById('contactForm');
-  const thankYou = document.getElementById('thankYouMessage');
-
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault(); // prevent page reload
-
-    const formData = new FormData(form);
-
-    try {
-      const response = await fetch('https://formspree.io/f/mrbljqpk', {
-        method: 'POST',
-        body: formData,
-        headers: { 'Accept': 'application/json' }
-      });
-
-      if (response.ok) {
-        form.reset();
-        thankYou.style.display = 'block';
-      } else {
-        alert('Oops! Something went wrong. Please try again.');
-      }
-    } catch (error) {
-      alert('Error submitting form. Please try again later.');
-    }
-  });
-</script>
-
-  </div>
+</div>
 </section>
 
 <style>
   /* Container & Layout */
   #thankYouMessage {
-  display: none;
-  color: green;
-  margin-top: 20px;
-  transition: opacity 0.4s ease;
-  opacity: 0;
-}
+    display: none;
+    color: green;
+    margin-top: 20px;
+    transition: opacity 0.4s ease;
+    opacity: 0;
+  }
 
-#thankYouMessage.show {
-  display: block;
-  opacity: 1;
-}
+  #thankYouMessage.show {
+    display: block;
+    opacity: 1;
+  }
 
   #contact {
     background:#fff;
@@ -642,77 +707,43 @@ document.addEventListener('keydown', (e) => {
     background:#e65c00;
     transform:scale(1.05);
   }
-
-
-<!-- NAVBAR keep as is  -->
-<nav class="navbar">
-  <div class="nav-container">
-    <a href="#home" class="logo">
-      <img src="images/logo.png" alt="SA Private Protection Services Logo">
-    </a>
-
-    <!-- Hamburger Icon keep as is -->
-    <button class="nav-toggle" id="navToggle" aria-label="Open menu">
-      <span class="bar"></span>
-      <span class="bar"></span>
-      <span class="bar"></span>
-    </button>
-
-    <!-- Nav Links keep as is -->
-    <ul class="nav-links" id="navLinks">
-      <li><a href="#home">Home</a></li>
-      <li><a href="#about">About Us</a></li>
-      <li><a href="#services">Services</a></li>
-      <li><a href="#gallery">Gallery</a></li>
-      <li><a href="#testimonials">Testimonials</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-  </div>
-</nav>
-
-/* ---------- MOBILE MENU ---------- */
-@media (max-width: 768px) {
-  .nav-toggle {
-    display: flex;
-  
-  .nav-links {
-    position: absolute;
-    top: var(--nav-height);
-    right: 0;
-    width: 100%;
-    background: var(--black);
-    flex-direction: column;
-    align-items: center;
-    gap: 1.2rem;
-    padding: 1.5rem 0;
-    transform: translateY(-200%);
-    transition: transform .35s ease-in-out;
-  }
-
-  .nav-links.active {
-    transform: translateY(0);
-  }
-
-  .nav-links a {
-    font-size: 1.1rem;
-  }
-
-  /* Hamburger animation */
-  .nav-toggle.active .bar:nth-child(1) {
-    transform: rotate(45deg) translate(5px, 5px);
-  }
-
-  .nav-toggle.active .bar:nth-child(2) {
-    opacity: 0;
-  }
-
-  .nav-toggle.active .bar:nth-child(3) {
-    transform: rotate(-45deg) translate(5px, -5px);
-  }
 </style>
 
+<script>
+  /* =========================
+     CONTACT FORM (kept original functionality)
+     ========================= */
+  const form = document.getElementById('contactForm');
+  const thankYou = document.getElementById('thankYouMessage');
 
-  </main>
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault(); // prevent page reload
+
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch('https://formspree.io/f/mrbljqpk', {
+        method: 'POST',
+        body: formData,
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (response.ok) {
+        form.reset();
+        // show animated thank you
+        thankYou.classList.add('show');
+        // hide after a while (optional)
+        setTimeout(() => {
+          thankYou.classList.remove('show');
+        }, 6000);
+      } else {
+        alert('Oops! Something went wrong. Please try again.');
+      }
+    } catch (error) {
+      alert('Error submitting form. Please try again later.');
+    }
+  });
+</script>
 
   <footer style="background:#111;color:#fff;padding:28px;text-align:center">© 2025 SA Private Protection Services (PTY) LTD</footer>
 
@@ -733,16 +764,140 @@ document.addEventListener('keydown', (e) => {
   </div>
 
 <script>
-  // HERO overlay dim on scroll + navbar fade
+  /* =========================
+     NAV BEHAVIOUR
+     - desktop: hover shows submenu (unchanged)
+     - mobile: hamburger toggles menu
+     - touch devices: first tap opens submenu, second tap follows link (requested behavior)
+     - clicking outside closes open submenus
+     ========================= */
+
   const nav = document.getElementById('mainNav');
-  const overlay = document.getElementById('heroOverlay');
+  const navLinks = document.getElementById('navLinks');
+  const navToggle = document.getElementById('navToggle');
+  const heroOverlay = document.getElementById('heroOverlay');
+
+  // HERO overlay dim on scroll + navbar fade
   window.addEventListener('scroll', () => {
     const y = window.scrollY;
     nav.style.background = `rgba(17,17,17, ${Math.min(Math.max(y/300,0.6),0.95)})`;
-    if(overlay) overlay.style.background = `rgba(0,0,0, ${Math.min(0.35 + (y/1000),0.9)})`;
+    if(heroOverlay) heroOverlay.style.background = `rgba(0,0,0, ${Math.min(0.35 + (y/1000),0.9)})`;
   });
 
-  // Scroll spy (highlight nav items)
+  // mobile hamburger toggle
+  navToggle.addEventListener('click', () => {
+    const expanded = navToggle.getAttribute('aria-expanded') === 'true';
+    navToggle.setAttribute('aria-expanded', String(!expanded));
+    navLinks.classList.toggle('open');
+    navToggle.classList.toggle('active');
+  });
+
+  // close mobile menu when a nav link (non-parent) is clicked
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      // if mobile menu open, close it
+      if(navLinks.classList.contains('open')) {
+        navLinks.classList.remove('open');
+        navToggle.classList.remove('active');
+        navToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+  });
+
+  // Submenu toggle buttons (mobile) behaviour
+  document.querySelectorAll('.has-submenu').forEach(li => {
+    const button = li.querySelector('.submenu-toggle');
+    const submenu = li.querySelector('ul');
+
+    // mobile explicit toggle button
+    if (button && submenu) {
+      button.addEventListener('click', (e) => {
+        e.preventDefault();
+        const isOpen = submenu.classList.toggle('open');
+        button.setAttribute('aria-expanded', String(isOpen));
+        if (isOpen) li.classList.add('submenu-open');
+        else li.classList.remove('submenu-open');
+      });
+    }
+
+    // TOUCH/POINTER behavior: first tap opens submenu, second tap follows link
+    const anchor = li.querySelector('a.nav-link');
+    if (anchor && submenu) {
+      // use pointerdown so we can detect pointerType (touch vs mouse)
+      anchor.addEventListener('pointerdown', (ev) => {
+        // only intercept touch-style pointers (touch, pen)
+        if (ev.pointerType === 'touch' || ev.pointerType === 'pen') {
+          // if submenu is currently closed, open it and prevent navigation
+          const isOpen = submenu.classList.contains('open') || li.classList.contains('submenu-open');
+          if (!isOpen) {
+            ev.preventDefault();
+            // close other open submenus
+            closeAllSubmenus();
+            submenu.classList.add('open');
+            li.classList.add('submenu-open');
+            // reflect on the submenu button if exists
+            const btn = li.querySelector('.submenu-toggle');
+            if (btn) btn.setAttribute('aria-expanded', 'true');
+          } else {
+            // allow the navigation (second tap) — but we also close submenu after a short delay
+            setTimeout(() => {
+              submenu.classList.remove('open');
+              li.classList.remove('submenu-open');
+              const btn = li.querySelector('.submenu-toggle');
+              if (btn) btn.setAttribute('aria-expanded', 'false');
+            }, 600);
+          }
+        }
+        // for mouse/pointer devices we do nothing here (hover handles it)
+      });
+
+      // For keyboard users: toggle on Enter when focused
+      anchor.addEventListener('keydown', (ev) => {
+        if(ev.key === 'Enter' || ev.key === ' ') {
+          const isOpen = submenu.classList.contains('open') || li.classList.contains('submenu-open');
+          ev.preventDefault();
+          if (!isOpen) {
+            closeAllSubmenus();
+            submenu.classList.add('open');
+            li.classList.add('submenu-open');
+            const btn = li.querySelector('.submenu-toggle');
+            if (btn) btn.setAttribute('aria-expanded', 'true');
+          } else {
+            submenu.classList.remove('open');
+            li.classList.remove('submenu-open');
+            const btn = li.querySelector('.submenu-toggle');
+            if (btn) btn.setAttribute('aria-expanded', 'false');
+            // optionally follow link (uncomment to navigate on Enter when submenu open)
+            // window.location = anchor.href;
+          }
+        }
+      });
+    }
+  });
+
+  function closeAllSubmenus() {
+    document.querySelectorAll('.has-submenu').forEach(li => {
+      const submenu = li.querySelector('ul');
+      if (submenu) submenu.classList.remove('open');
+      li.classList.remove('submenu-open');
+      const btn = li.querySelector('.submenu-toggle');
+      if (btn) btn.setAttribute('aria-expanded', 'false');
+    });
+  }
+
+  // click outside to close any open submenu
+  document.addEventListener('click', (e) => {
+    if (!nav.contains(e.target)) {
+      closeAllSubmenus();
+      if (navLinks.classList.contains('open')) {
+        navLinks.classList.remove('open');
+        navToggle.classList.remove('active');
+        navToggle.setAttribute('aria-expanded', 'false');
+      }
+    }
+  });
+
+  // simple scroll spy (highlights anchors)
   const navSpyLinks = document.querySelectorAll('nav a[href^="#"]');
   const sections = document.querySelectorAll('main section, header');
   function onScrollSpy(){
@@ -769,7 +924,7 @@ document.addEventListener('keydown', (e) => {
     onScrollSpy();
   });
 
-  // Fade-in on scroll for sections
+  // Fade-in on scroll for sections using IntersectionObserver
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if(entry.isIntersecting) entry.target.classList.add('visible');
@@ -777,31 +932,7 @@ document.addEventListener('keydown', (e) => {
   }, {threshold: 0.12});
   document.querySelectorAll('main section').forEach(s => observer.observe(s));
 
- 
-
-  // make nav links close dropdown on small screens if you later add mobile menu logic
-  navSpyLinks.forEach(l => l.addEventListener('click', ()=> {
-    // small helper: remove active on mobile nav if implemented
-  }));
 </script>
-<script>
-  const navToggle = document.getElementById('navToggle');
-  const navLinks = document.getElementById('navLinks');
-
-  navToggle.addEventListener('click', () => {
-    navToggle.classList.toggle('active');
-    navLinks.classList.toggle('active');
-  });
-
-  // Optional: close menu when a link is clicked
-  document.querySelectorAll('.nav-links a').forEach(link => {
-    link.addEventListener('click', () => {
-      navToggle.classList.remove('active');
-      navLinks.classList.remove('active');
-    });
-  });
-</script>
-
 
 </body>
 </html>

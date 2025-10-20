@@ -1,0 +1,79 @@
+/* Mobile / Responsive overrides (mobile.css) */
+
+/* Base fluid layout */
+:root{
+  --max-content-width: 1100px;
+  --site-padding: 16px;
+  --base-font: 16px;
+}
+
+/* Ensure content centers and doesn't exceed readable width */
+body{
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  font-size: var(--base-font);
+  line-height: 1.4;
+  margin:0;
+  padding:var(--site-padding);
+  box-sizing:border-box;
+  color:#111;
+  background:#fff;
+}
+
+.container{
+  margin-left:auto;
+  margin-right:auto;
+  max-width:var(--max-content-width);
+  padding:0 var(--site-padding);
+}
+
+/* Images & videos are fluid */
+img,figure,video,iframe{
+  max-width:100%;
+  height:auto;
+}
+
+/* Navigation: stack on small screens */
+.nav{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  align-items:center;
+}
+
+/* Headings scale slightly on small screens */
+h1{font-size:1.5rem;margin:0.5rem 0}
+h2{font-size:1.25rem;margin:0.5rem 0}
+
+/* Buttons & inputs touch-friendly */
+button,a.button{
+  display:inline-block;
+  padding:10px 14px;
+  border-radius:6px;
+  font-size:1rem;
+  line-height:1;
+}
+
+/* Utility: readable paragraphs on narrow screens */
+p{margin:0.6rem 0; font-size:1rem}
+
+/* Desktop-first spacing adjustments */
+@media (min-width: 700px){
+  body{font-size:16px}
+  h1{font-size:2rem}
+}
+
+/* Mobile-specific adjustments */
+@media (max-width: 699px){
+  :root{--site-padding:12px}
+  body{padding:var(--site-padding)}
+  .nav{flex-direction:row; gap:8px}
+  .container{padding:0}
+  /* Example: stack columns into a single column */
+  .columns{display:block}
+  .column{width:100%; margin-bottom:16px}
+}
+
+/* Accessibility: high-contrast fallback if user prefers */
+@media (prefers-contrast: more){
+  body{color:#000;background:#fff}
+}

@@ -246,6 +246,38 @@
     background-repeat: no-repeat !important;
   }
 }
+  .hero-img-mobile {
+  display: none;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 520px) {
+  .hero {
+    background: none !important;      /* Remove background image */
+    min-height: unset !important;
+    height: auto !important;
+    display: block !important;        /* Remove flex for stacking */
+    padding: 0;
+  }
+  .hero-img-mobile {
+    display: block;
+  }
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+  }
+  .hero .content {
+    position: relative;
+    z-index: 3;
+    margin-top: -40vw; /* Adjust if you want text over the image, or remove if not needed */
+  }
+}
 
   /* floating social */
   .floating-buttons{position:fixed; right:18px; bottom:20px; display:flex; flex-direction:column; gap:12px; z-index:1300}
@@ -401,10 +433,11 @@
 
   <!-- HERO -->
   <header id="home" class="hero" role="banner">
-    <div class="hero-overlay" id="heroOverlay"></div>
-    <div class="content">
-    </div>
-  </header>
+  <img src="sapps-banner-1.png" alt="SA Private Protection Services" class="hero-img-mobile">
+  <div class="hero-overlay" id="heroOverlay"></div>
+  <div class="content">
+  </div>
+</header>
 
   <main>
 

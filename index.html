@@ -80,7 +80,19 @@
   nav a.active{
     color:#fff;
   }
-  
+  /* Custom mobile adjustments for hero and spacing */
+@media (max-width: 520px) {
+  .hero {
+    height: 25vh !important; /* Reduced height */
+    min-height: 150px !important; /* Reduced min-height */
+  }
+  .hero-overlay {
+    background: transparent !important; /* Ensure transparency */
+  }
+  main {
+    padding-top: 20px !important; /* Reduced top padding */
+  }
+}
   /* submenu: make it behave like mobile (static) so it opens inline inside the menu overlay */
   .submenu{
     display:none;

@@ -386,7 +386,6 @@
           <li><a href="#large-business" class="nav-link">Large Business</a></li>
         </ul>
       </li>
-      <li><a href="#gallery" class="nav-link">Gallery</a></li>
       <li><a href="#contact" class="nav-link">Contact</a></li>
     </ul>
   </nav>
@@ -434,7 +433,7 @@
         </a>
 
         <a id="escorts" class="service-card" href="escort-details.html" title="Escorts & Transfers">
-          <img class="service-image" src="service5.jpg" alt="Escorts & Transfers">
+          <img class="service-image" src="escort4.jpeg" alt="Escorts & Transfers">
           <div class="service-body"><h3>Escorts & Transfers</h3></div>
         </a>
 
@@ -475,29 +474,6 @@
       </div>
     </section>
 
-    <!-- GALLERY MASONRY WITH LIGHTBOX NAVIGATION -->
-<section id="gallery">
-  <h2 class="section-title">Gallery</h2>
-  <div class="gallery-grid" id="galleryGrid">
-    <img src="gallery17.jpg" alt="Gallery 17" class="lightbox-img">
-    <img src="gallery2.jpg" alt="Gallery 2" class="lightbox-img">
-    <img src="gallery3.jpg" alt="Gallery 3" class="lightbox-img">
-    <img src="gallery4.jpg" alt="Gallery 4" class="lightbox-img">
-    <img src="gallery18.jpg" alt="Gallery 18" class="lightbox-img">
-    <img src="gallery6.jpg" alt="Gallery 6" class="lightbox-img">
-    <img src="gallery7.jpg" alt="Gallery 7" class="lightbox-img">
-    <img src="gallery8.jpg" alt="Gallery 8" class="lightbox-img">
-    <img src="gallery9.jpg" alt="Gallery 9" class="lightbox-img">
-    <img src="gallery10.jpg" alt="Gallery 10" class="lightbox-img">
-    <img src="gallery11.jpg" alt="Gallery 11" class="lightbox-img">
-    <img src="gallery12.jpg" alt="Gallery 12" class="lightbox-img">
-    <img src="gallery13.jpg" alt="Gallery 13" class="lightbox-img">
-    <img src="gallery14.jpg" alt="Gallery 14" class="lightbox-img">
-    <img src="gallery15.jpg" alt="Gallery 15" class="lightbox-img">
-    <img src="gallery16.jpg" alt="Gallery 16" class="lightbox-img">
-  </div>
-</section>
-
 <!-- LIGHTBOX MODAL -->
 <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-label="Image viewer">
   <span class="close" role="button" aria-label="Close">&times;</span>
@@ -506,142 +482,6 @@
   <a class="prev" role="button" aria-label="Previous image">&#10094;</a>
   <a class="next" role="button" aria-label="Next image">&#10095;</a>
 </div>
-
-<style>
-/* Gallery Images */
-.gallery-grid img {
-  cursor: pointer;
-  transition: 0.3s;
-}
-.gallery-grid img:hover {
-  opacity: 0.8;
-}
-
-/* Lightbox Modal */
-.lightbox {
-  display: none;
-  position: fixed;
-  z-index: 9999;
-  padding-top: 60px;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0,0,0,0.9);
-}
-
-/* Modal Image */
-.lightbox-content {
-  margin: auto;
-  display: block;
-  max-width: 90%;
-  max-height: 80%;
-}
-
-/* Caption */
-#caption {
-  margin: 15px auto;
-  text-align: center;
-  color: #fff;
-  font-size: 16px;
-}
-
-/* Close Button */
-.close {
-  position: absolute;
-  top: 20px;
-  right: 35px;
-  color: #fff;
-  font-size: 40px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-/* Next & Previous Buttons */
-.prev, .next {
-  cursor: pointer;
-  position: absolute;
-  top: 50%;
-  width: auto;
-  padding: 16px;
-  color: #fff;
-  font-weight: bold;
-  font-size: 40px;
-  user-select: none;
-  transform: translateY(-50%);
-}
-
-.prev { left: 10px; }
-.next { right: 10px; }
-
-.prev:hover, .next:hover { color: #ff7a00; } /* optional brand color hover */
-</style>
-
-<script>
-/* =========================
-   LIGHTBOX (kept as original)
-   ========================= */
-const lightbox = document.getElementById('lightbox');
-const lightboxImg = document.getElementById('lightbox-img');
-const captionText = document.getElementById('caption');
-const images = document.querySelectorAll('.lightbox-img');
-let currentIndex = 0;
-
-// Open lightbox
-images.forEach((img, index) => {
-  img.onclick = () => {
-    lightbox.style.display = 'block';
-    lightbox.setAttribute('aria-hidden', 'false');
-    currentIndex = index;
-    showImage(currentIndex);
-  }
-});
-
-// Show image function
-function showImage(index) {
-  lightboxImg.src = images[index].src;
-  lightboxImg.alt = images[index].alt || '';
-  captionText.innerHTML = images[index].alt || '';
-}
-
-// Next / Previous controls
-document.querySelector('.next').onclick = () => {
-  currentIndex = (currentIndex + 1) % images.length;
-  showImage(currentIndex);
-}
-
-document.querySelector('.prev').onclick = () => {
-  currentIndex = (currentIndex - 1 + images.length) % images.length;
-  showImage(currentIndex);
-}
-
-// Close lightbox
-document.querySelector('.close').onclick = () => {
-  lightbox.style.display = 'none';
-  lightbox.setAttribute('aria-hidden', 'true');
-}
-
-// Close when clicking outside image
-lightbox.onclick = (e) => {
-  if(e.target === lightbox) {
-    lightbox.style.display = 'none';
-    lightbox.setAttribute('aria-hidden', 'true');
-  }
-}
-
-// Optional: keyboard navigation
-document.addEventListener('keydown', (e) => {
-  if(lightbox.style.display === 'block') {
-    if(e.key === 'ArrowRight') document.querySelector('.next').click();
-    if(e.key === 'ArrowLeft') document.querySelector('.prev').click();
-    if(e.key === 'Escape') {
-      lightbox.style.display = 'none';
-      lightbox.setAttribute('aria-hidden', 'true');
-    }
-  }
-});
-</script>
 
     <!-- CONTACT -->
 <section id="contact">

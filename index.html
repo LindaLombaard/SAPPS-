@@ -93,22 +93,26 @@
     padding-top: 20px !important; /* Reduced top padding */
   }
 }
-  /* submenu: make it behave like mobile (static) so it opens inline inside the menu overlay */
+  /* submenu: default hidden, appears on hover for desktop */
   .submenu{
     display:none;
-    position:static; /* important: static so it flows in the menu overlay */
-    background:transparent;
-    border-radius:0;
-    min-width:0;
+    position:absolute; /* positioned relative to parent li */
+    top:100%; /* drops down below the parent link */
+    left:0;
+    background:var(--black); /* same as nav background */
+    border-radius:4px;
+    min-width:180px;
     flex-direction:column;
-    padding:0;
-    box-shadow:none;
+    padding:8px 0;
+    box-shadow:0 6px 18px rgba(0,0,0,0.15);
+    z-index:2250; /* above nav */
   }
-  .submenu.open{ display:flex; }
+  /* show submenu on hover of parent li */
+  nav li.has-submenu:hover > .submenu{ display:flex; }
 
   .submenu li{padding:0}
   .submenu li a{padding:10px 16px; width:100%; display:block; color:var(--white)}
-  .submenu li a:hover{background:rgba(255,255,255,0.04)}
+  .submenu li a:hover{background:rgba(255,255,255,0.06)}
  
   /* ---------- HERO ---------- */
   .hero {
@@ -289,8 +293,8 @@
   }
   .nav-toggle .bar{ display:block; width:22px; height:2px; background:var(--white); border-radius:2px; transition:transform .25s, opacity .25s;}
 
-  /* submenu toggle button (mobile only) */
-  .submenu-toggle { display:none; background:transparent; border:0; color:var(--white); padding:8px; cursor:pointer; }
+  /* hide submenu toggle button by default (desktop) */
+  .submenu-toggle { display:none; }
 
   @media (max-width: 768px) {
     nav { padding:0 12px; }
@@ -314,11 +318,29 @@
 
     nav li { width:100%; border-top:1px solid rgba(255,255,255,0.03); }
     nav a { display:block; width:100%; text-align:left; padding:14px 18px; }
-    .submenu { position:static; background:transparent; box-shadow:none; padding-left:12px; display:none; }
+    
+    /* mobile submenu behavior: static, opens on click */
+    .submenu { 
+      position:static; 
+      background:transparent; 
+      box-shadow:none; 
+      padding-left:12px; 
+      display:none; 
+    }
     .submenu.open { display:flex; flex-direction:column; }
-    .submenu li a { padding:10px 28px; background:transparent; border-radius:0; }
 
-    .submenu-toggle { display:inline-flex; align-items:center; justify-content:center; padding:12px; margin-left:auto; }
+    /* show submenu toggle button on mobile */
+    .submenu-toggle { 
+      display:inline-flex; 
+      align-items:center; 
+      justify-content:center; 
+      padding:12px; 
+      margin-left:auto; 
+      background:transparent; 
+      border:0; 
+      color:var(--white); 
+      cursor:pointer; 
+    }
   }
 
   /* small visual for open submenu (keyboard focus/indicator) */

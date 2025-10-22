@@ -12,6 +12,7 @@
       color: #333;
       line-height: 1.6;
     }
+
     .container {
       max-width: 900px;
       margin: auto;
@@ -20,25 +21,31 @@
       border-radius: 8px;
       box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
+
     h1, h2 {
-      color: #e67e22; /* Brand orange */
+      color: #e67e22;
       margin-bottom: 15px;
     }
+
     h2 {
       margin-top: 40px;
       border-bottom: 2px solid #e67e22;
       padding-bottom: 6px;
     }
+
+    p {
+      margin-bottom: 20px;
+    }
+
     ul {
       margin-bottom: 20px;
       padding-left: 20px;
     }
+
     li {
       margin-bottom: 8px;
     }
-    p {
-      margin-bottom: 20px;
-    }
+
     a.back-link {
       display: inline-block;
       margin-top: 30px;
@@ -46,8 +53,103 @@
       color: #e67e22;
       font-weight: bold;
     }
+
     a.back-link:hover {
       text-decoration: underline;
+    }
+
+    /* === Gallery grid === */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .gallery img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .gallery img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    /* === Lightbox overlay === */
+    .lightbox {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.9);
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .lightbox.active {
+      display: flex;
+    }
+
+    .lightbox img {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 8px;
+      box-shadow: 0 0 20px rgba(255,255,255,0.2);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .lightbox img.fade-in {
+      opacity: 1;
+    }
+
+    /* Navigation buttons */
+    .nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      color: white;
+      font-size: 2rem;
+      background: rgba(0,0,0,0.4);
+      border: none;
+      padding: 10px 15px;
+      cursor: pointer;
+      border-radius: 50%;
+      transition: background 0.2s;
+    }
+
+    .nav-btn:hover {
+      background: rgba(0,0,0,0.7);
+    }
+
+    .prev { left: 20px; }
+    .next { right: 20px; }
+
+    /* Close button */
+    .close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 2rem;
+      color: white;
+      cursor: pointer;
+      background: rgba(0,0,0,0.4);
+      border-radius: 50%;
+      padding: 5px 12px;
+      transition: background 0.2s;
+    }
+
+    .close:hover {
+      background: rgba(0,0,0,0.7);
     }
   </style>
 </head>
@@ -55,14 +157,28 @@
   <div class="container">
     <h1>Surveillance & Alarm Solutions</h1>
 
+    <!-- Gallery -->
+    <div class="gallery">
+      <img src="gallery14.jpg" alt="Surveillance" class="lightbox-img">
+      <img src="gallery17.jpg" alt="Gallery 17" class="lightbox-img">
+      <img src="gallery2.jpg" alt="Gallery 2" class="lightbox-img">
+      <img src="gallery3.jpg" alt="Gallery 3" class="lightbox-img">
+      <img src="gallery4.jpg" alt="Gallery 4" class="lightbox-img">
+    </div>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+      <span class="close">&times;</span>
+      <button class="nav-btn prev">&#10094;</button>
+      <img src="" alt="Expanded view" id="lightbox-image">
+      <button class="nav-btn next">&#10095;</button>
+    </div>
+
     <section>
       <h2>CCTV Solutions</h2>
-      <div class="container">
-    <img src="gallery14.jpg" alt="surveillance"style="max-width:30%; border-radius:8px; margin-bottom:20px;" />
       <p>
         Keep eyes on what matters most with our professional CCTV solutions. We offer expert installation and ongoing monitoring for homes, businesses, estates, warehouses, and high-risk sites—using the latest in surveillance technology to deter crime and provide real-time security.
       </p>
-      <p>Our CCTV services include:</p>
       <ul>
         <li>Custom CCTV system design and installation</li>
         <li>Indoor/outdoor HD and night-vision cameras</li>
@@ -71,9 +187,6 @@
         <li>24/7 monitoring options via control room</li>
         <li>Maintenance, upgrades, and fault response</li>
       </ul>
-      <p>
-        All systems are installed by qualified technicians with full setup support and training.
-      </p>
       <p><strong>Secure. Smart. Always watching—protect your space with CCTV you can trust.</strong></p>
     </section>
 
@@ -82,7 +195,6 @@
       <p>
         When seconds count, a reliable panic system can save lives. We install discreet, high-performance panic buttons and emergency alert systems for homes, businesses, retail stores, estates, and individuals at risk.
       </p>
-      <p>Our panic system services include:</p>
       <ul>
         <li>Fixed and wireless panic buttons</li>
         <li>Remote activation via mobile or wearable devices</li>
@@ -91,9 +203,6 @@
         <li>Custom solutions for high-risk areas or vulnerable individuals</li>
         <li>Fast, discreet installation and training</li>
       </ul>
-      <p>
-        Whether for personal safety, staff protection, or emergency readiness, our systems are designed for instant response and total peace of mind.
-      </p>
       <p><strong>Be prepared. Stay safe. Trust SA Private Protection Services.</strong></p>
     </section>
 
@@ -102,7 +211,6 @@
       <p>
         Protect your home or business with professionally installed alarm systems tailored to your security needs. We offer reliable, affordable alarm solutions using top-quality equipment and trained technicians to ensure 24/7 peace of mind.
       </p>
-      <p>Our alarm installation services include:</p>
       <ul>
         <li>Intruder and perimeter alarm systems</li>
         <li>Wired and wireless alarm options</li>
@@ -111,14 +219,61 @@
         <li>Custom security setups for homes, offices, and businesses</li>
         <li>Maintenance, upgrades, and system testing</li>
       </ul>
-      <p>
-        All installations are done to the highest safety and quality standards, with full training provided on system use.
-      </p>
       <p><strong>Secure your space—professionally, quickly, and affordably.</strong></p>
     </section>
 
     <a href="index.html" class="back-link">&larr; Back to Home</a>
   </div>
+
+  <script>
+    const images = document.querySelectorAll('.lightbox-img');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImage = document.getElementById('lightbox-image');
+    const closeBtn = document.querySelector('.lightbox .close');
+    const nextBtn = document.querySelector('.lightbox .next');
+    const prevBtn = document.querySelector('.lightbox .prev');
+    let currentIndex = 0;
+
+    function showImage(index) {
+      const imgSrc = images[index].src;
+      lightboxImage.classList.remove('fade-in');
+      lightboxImage.src = imgSrc;
+      currentIndex = index;
+      lightbox.classList.add('active');
+
+      lightboxImage.onload = () => {
+        requestAnimationFrame(() => lightboxImage.classList.add('fade-in'));
+      };
+    }
+
+    images.forEach((img, index) => {
+      img.addEventListener('click', () => showImage(index));
+    });
+
+    closeBtn.addEventListener('click', () => lightbox.classList.remove('active'));
+
+    nextBtn.addEventListener('click', () => {
+      currentIndex = (currentIndex + 1) % images.length;
+      showImage(currentIndex);
+    });
+
+    prevBtn.addEventListener('click', () => {
+      currentIndex = (currentIndex - 1 + images.length) % images.length;
+      showImage(currentIndex);
+    });
+
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) lightbox.classList.remove('active');
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (!lightbox.classList.contains('active')) return;
+      if (e.key === 'ArrowRight') nextBtn.click();
+      if (e.key === 'ArrowLeft') prevBtn.click();
+      if (e.key === 'Escape') closeBtn.click();
+    });
+  </script>
 </body>
 </html>
+
 

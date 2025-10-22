@@ -11,6 +11,7 @@
       background-color: #f8f8f8;
       color: #333;
     }
+
     .container {
       max-width: 900px;
       margin: auto;
@@ -19,18 +20,105 @@
       border-radius: 8px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
+
     h1 {
-      color: #e67e22; /* orange from your brand colors */
+      color: #e67e22;
     }
-    img {
-      max-width: 100%;
+
+    /* === Gallery grid === */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .gallery img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
       border-radius: 8px;
-      margin-bottom: 20px;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
-    p {
-      line-height: 1.6;
-      margin-bottom: 20px;
+
+    .gallery img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     }
+
+    /* === Lightbox overlay === */
+    .lightbox {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.9);
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .lightbox.active {
+      display: flex;
+    }
+
+    .lightbox img {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 8px;
+      box-shadow: 0 0 20px rgba(255,255,255,0.2);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .lightbox img.fade-in {
+      opacity: 1;
+    }
+
+    /* === Navigation buttons === */
+    .nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      color: white;
+      font-size: 2rem;
+      background: rgba(0,0,0,0.4);
+      border: none;
+      padding: 10px 15px;
+      cursor: pointer;
+      border-radius: 50%;
+      transition: background 0.2s;
+    }
+
+    .nav-btn:hover {
+      background: rgba(0,0,0,0.7);
+    }
+
+    .prev { left: 20px; }
+    .next { right: 20px; }
+
+    /* === Close button === */
+    .close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 2rem;
+      color: white;
+      cursor: pointer;
+      background: rgba(0,0,0,0.4);
+      border-radius: 50%;
+      padding: 5px 12px;
+      transition: background 0.2s;
+    }
+
+    .close:hover {
+      background: rgba(0,0,0,0.7);
+    }
+
     a.back-link {
       display: inline-block;
       margin-top: 20px;
@@ -38,6 +126,7 @@
       color: #e67e22;
       font-weight: bold;
     }
+
     a.back-link:hover {
       text-decoration: underline;
     }
@@ -46,9 +135,27 @@
 <body>
   <div class="container">
     <h1>Escort Services</h1>
-    <img src="service5.jpg" alt="Escort Services" style="max-width:40%; border-radius:8px; margin-bottom:20px;"/>
+
+    <!-- Gallery -->
+    <div class="gallery">
+      <img src="service5.jpg" alt="Escort Services" class="lightbox-img">
+      <img src="gallery17.jpg" alt="Gallery 17" class="lightbox-img">
+      <img src="gallery2.jpg" alt="Gallery 2" class="lightbox-img">
+      <img src="gallery3.jpg" alt="Gallery 3" class="lightbox-img">
+      <img src="gallery4.jpg" alt="Gallery 4" class="lightbox-img">
+    </div>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+      <span class="close">&times;</span>
+      <button class="nav-btn prev">&#10094;</button>
+      <img src="" alt="Expanded view" id="lightbox-image">
+      <button class="nav-btn next">&#10095;</button>
+    </div>
+
     <p>
-      We provide professional armed or unarmed escort services to ensure the safe movement of people, vehicles, or high-value assets. Whether you're transporting cash, equipment, or require personal protection during travel, our trained security personnel ensure your safety every step of the way.
+      We provide professional armed or unarmed escort services to ensure the safe movement of people, vehicles, or high-value assets.
+      Whether you're transporting cash, equipment, or require personal protection during travel, our trained security personnel ensure your safety every step of the way.
     </p>
     <p>
       Our escort services include:
@@ -60,10 +167,67 @@
       </ul>
     </p>
     <p>
-      All escorts are conducted by PSIRA-registered officers with experience in tactical response and risk management. Discreet, reliable, and always prepared.
+      All escorts are conducted by PSIRA-registered officers with experience in tactical response and risk management.
+      Discreet, reliable, and always prepared.
     </p>
+
     <a href="index.html" class="back-link">&larr; Back to Home</a>
   </div>
+
+  <script>
+    const images = document.querySelectorAll('.lightbox-img');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImage = document.getElementById('lightbox-image');
+    const closeBtn = document.querySelector('.lightbox .close');
+    const nextBtn = document.querySelector('.lightbox .next');
+    const prevBtn = document.querySelector('.lightbox .prev');
+    let currentIndex = 0;
+
+    function showImage(index) {
+      const imgSrc = images[index].src;
+      lightboxImage.classList.remove('fade-in');
+      lightboxImage.src = imgSrc;
+      currentIndex = index;
+      lightbox.classList.add('active');
+
+      lightboxImage.onload = () => {
+        requestAnimationFrame(() => lightboxImage.classList.add('fade-in'));
+      };
+    }
+
+    images.forEach((img, index) => {
+      img.addEventListener('click', () => showImage(index));
+    });
+
+    closeBtn.addEventListener('click', () => {
+      lightbox.classList.remove('active');
+    });
+
+    nextBtn.addEventListener('click', () => {
+      currentIndex = (currentIndex + 1) % images.length;
+      showImage(currentIndex);
+    });
+
+    prevBtn.addEventListener('click', () => {
+      currentIndex = (currentIndex - 1 + images.length) % images.length;
+      showImage(currentIndex);
+    });
+
+    // Close when clicking outside image
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) lightbox.classList.remove('active');
+    });
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (!lightbox.classList.contains('active')) return;
+      if (e.key === 'ArrowRight') nextBtn.click();
+      if (e.key === 'ArrowLeft') prevBtn.click();
+      if (e.key === 'Escape') closeBtn.click();
+    });
+  </script>
 </body>
 </html>
+
+
 
